@@ -3,6 +3,7 @@ from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.recommendation import ALS
 from pyspark.ml.tuning import TrainValidationSplit, ParamGridBuilder
 from pyspark.sql.functions import col
+import os
 
 
 def get_recommendations(user_id, genre):
@@ -15,8 +16,11 @@ def get_recommendations(user_id, genre):
         .appName("ALS Collaborative Filtering Movie Recommendations") \
         .getOrCreate()
 
-    movieRatings = spark.read.csv("./dataset/ratings.csv", header=True, inferSchema=True)
-    movieInfo = spark.read.csv("./dataset/movies.csv", header=True, inferSchema=True)
+    # Get the absolute path of the directory containing your script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    movieRatings = spark.read.csv( script_dir + "/dataset/ratings.csv", header=True, inferSchema=True)
+    movieInfo = spark.read.csv(script_dir + "/dataset/movies.csv", header=True, inferSchema=True)
 
     # set the log level to ERROR to clean up the console output
     spark.sparkContext.setLogLevel("ERROR")

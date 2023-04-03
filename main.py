@@ -2,13 +2,29 @@ import MovieRecommender
 import Utils as utils
 import MovieReview as MR
 import pandas as pd
+import os
 
 
 movieReviews = []
-movie_titles = pd.read_csv("./dataset/movies.csv")
-movie_titles_cleaned = movie_titles.drop(movie_titles.columns[0], axis=1)
-movie_ratings = pd.read_csv("./dataset/ratings.csv")
+
+
+# Get the absolute path of the directory containing your script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the dataset folder dynamically
+dataset_folder = os.path.join(script_dir, 'dataset')
+
+# Construct the absolute paths to the ratings.csv and movies.csv files
+ratings_csv_path = os.path.join(dataset_folder, 'ratings.csv')
+movies_csv_path = os.path.join(dataset_folder, 'movies.csv')
+
+# Read the CSV file
+movie_titles = pd.read_csv(movies_csv_path)
+# Read the CSV file
+movie_ratings = pd.read_csv(ratings_csv_path)
+
 movie_data = pd.merge(movie_ratings, movie_titles, on='movieId')
+
 
 user_id = 0
 
