@@ -25,7 +25,7 @@ while True:
             movie_id = random_movie.iloc[0]["movieId"]
             movie_title = random_movie.iloc[0]["title"]
             # print the name of the movie
-            print(movie_title)
+            print("\n" + movie_title)
             rating = utils.get_rating()
 
             if rating == 'q':
@@ -37,9 +37,9 @@ while True:
             movieReview = MR.MovieReview(user_id, movie_id, movie_title, rating)
             movieReviews.append(movieReview)
     elif choice == '2':
+        print("Analyzing the data... please wait...")
         user_genre = utils.get_user_genre()
         MovieRecommender.get_recommendations(user_id, user_genre)
-        print("Analyzing the data... please wait...")
         movieReviews.clear()
     elif choice == '3':
         user_id = 0
